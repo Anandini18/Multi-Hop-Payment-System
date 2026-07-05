@@ -4,45 +4,42 @@ A distributed backend system that enables secure offline payment routing through
 
 ---
 
-## Tech Stack
+## Demo Snippets
 
-* Java 17
-* Spring Boot
-* Spring Data JPA (Hibernate)
-* REST APIs
-* H2 Database
-* Maven
-* JUnit 5
+### Before running the simulation, the system is clean. All nodes are online, and the backend has seeded accounts for Alice, Bob, Carol, and Dave.
 
----
+<img width="1119" height="614" alt="image" src="https://github.com/user-attachments/assets/8c615117-e853-427f-bc55-66356c35d244" />
+<img width="1106" height="614" alt="image" src="https://github.com/user-attachments/assets/eb204186-332b-4e31-b2c3-09f3c789f256" />
 
-# Features
+### Step 1: Payment Creation and Injection
+The sender (alice@demo) creates an offline payment request of ₹500 for the receiver (bob@demo), enters the UPI PIN, and clicks Inject Packet on phone-alice.
+The payment data is encrypted locally using the server's public key (hybrid RSA-OAEP + AES-256-GCM).
+The resulting encrypted packet is stored in the buffer of phone-alice, which displays 1 pkt in the network diagram.
 
-### 🔹 Multi-Hop Payment Routing
+<img width="1109" height="611" alt="image" src="https://github.com/user-attachments/assets/f554e829-d97a-411b-8b3e-d3319dddc362" />
+<img width="1119" height="609" alt="image" src="https://github.com/user-attachments/assets/2063df7f-6f2d-4491-9787-2869eca03632" />
 
-Implemented a distributed payment routing system where encrypted payment packets travel across multiple intermediary devices before reaching an internet-connected bridge node for settlement.
 
-### 🔹 Secure Hybrid Encryption
+### Step 2: Mesh Gossip Routing
+Clicking Run Gossip propagates the packet across nearby devices.
+In this step, the packet travels across intermediary nodes (phone-stranger1 ➔ phone-stranger2 ➔ phone-stranger3) that do not have internet.
+Finally, it lands in the buffer of the internet-connected phone-bridge node, which shows the packet holds.
 
-Protected payment data using **RSA-OAEP + AES-256-GCM** hybrid encryption so that only the backend can decrypt the packet while also detecting any tampering.
+<img width="1118" height="613" alt="image" src="https://github.com/user-attachments/assets/3183885e-ac2e-40f9-9152-037eb0b18171" />
 
-### 🔹 Exactly-Once Settlement
+### Step 3: Ingestion and Idempotent Settlement
+The bridge node detects internet access and uploads all held packets to the backend via a POST request to /api/bridge/ingest.
+The backend verifies the SHA-256 hash of the packet, decrypts it, validates the PIN and nonce, and settles the payment.
+The transaction history updates immediately to show the status SETTLED, and Alice's balance is debited by ₹500 while Bob's balance is credited.
 
-Guaranteed duplicate-safe transaction processing by generating a **SHA-256 hash** for every payment packet, ensuring that repeated uploads of the same packet are settled only once.
+<img width="1119" height="613" alt="image" src="https://github.com/user-attachments/assets/ed5f224c-4614-46c2-8f68-808d966f5688" />
+<img width="1118" height="610" alt="image" src="https://github.com/user-attachments/assets/31b88ccd-a1d4-4270-b53b-893414d0eb73" />
+<img width="1119" height="616" alt="image" src="https://github.com/user-attachments/assets/7c2df6e0-28d7-472b-819b-def3a83df261" />
 
-### 🔹 Replay Protection
-
-Added encrypted timestamps and unique nonces to reject replayed or expired payment packets before settlement.
-
-### 🔹 REST APIs
-
-Developed REST APIs for payment creation, bridge ingestion, packet forwarding simulation, account management, and transaction settlement.
-
-### 🔹 Unit Testing
-
-Implemented JUnit test cases covering encryption/decryption, packet routing, duplicate handling, replay protection, tamper detection, and settlement workflows.
 
 ---
+
+
 
 # System Architecture
 
@@ -152,6 +149,26 @@ src
 └── test
     └── JUnit Test Cases
 ```
+
+---
+
+# Features
+
+### Multi-Hop Payment Routing
+
+Implemented a distributed payment routing system where encrypted payment packets travel across multiple intermediary devices before reaching an internet-connected bridge node for settlement.
+
+### Secure Hybrid Encryption
+
+Protected payment data using **RSA-OAEP + AES-256-GCM** hybrid encryption so that only the backend can decrypt the packet while also detecting any tampering.
+
+### Exactly-Once Settlement
+
+Guaranteed duplicate-safe transaction processing by generating a **SHA-256 hash** for every payment packet, ensuring that repeated uploads of the same packet are settled only once.
+
+### Replay Protection
+
+Added encrypted timestamps and unique nonces to reject replayed or expired payment packets before settlement.
 
 ---
 
