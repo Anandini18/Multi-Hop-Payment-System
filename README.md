@@ -172,52 +172,17 @@ Added encrypted timestamps and unique nonces to reject replayed or expired payme
 
 ---
 
-# How to Run
+## How to Run
 
-## Prerequisites
-
-* Java 17+
-* Git
-
----
-
-## Clone Repository
+**Prerequisites:** Java 17+, Git
 
 ```bash
-git clone https://github.com/<your-username>/multi-hop-payment-system.git
-
-cd multi-hop-payment-system
-```
-
----
-
-## Run Backend
-
-### Windows
-
-```bash
+git clone https://github.com/<your-username>/Multi-Hop-Payment-System.git
+cd Multi-Hop-Payment-System
 .\mvnw.cmd spring-boot:run
 ```
 
-### Linux / Mac
-
-```bash
-./mvnw spring-boot:run
-```
-
-The first run downloads all Maven dependencies automatically.
-
----
-
-## Open Application
-
-After the backend starts successfully, open:
-
-```
-http://localhost:8080
-```
-
-The frontend will communicate directly with the backend APIs.
+Open **http://localhost:8080** in your browser.
 
 ---
 
