@@ -4,6 +4,13 @@ A distributed backend system that enables secure offline payment routing through
 
 ---
 
+## Deployment
+
+- **Frontend:** https://frontend-fawn-delta-37.vercel.app
+- **Backend:** https://upi-offline-mesh-backend-4zo4.onrender.com
+
+---
+
 ## Demo Snippets
 
 ### Before running the simulation, the system is clean. All nodes are online, and the backend has seeded accounts for Alice, Bob, Carol, and Dave.
