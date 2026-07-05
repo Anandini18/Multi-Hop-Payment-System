@@ -83,10 +83,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
         console.error('Failed to parse saved logs', e);
       }
     } else {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080';
       setRecentActivity([
         `[${new Date().toLocaleTimeString()}] System initialized. All virtual devices online.`,
         `[${new Date().toLocaleTimeString()}] 4 offline devices (Alice, Stranger 1-3) and 1 bridge device configured.`,
-        `[${new Date().toLocaleTimeString()}] Connected to backend on http://localhost:8080.`
+        `[${new Date().toLocaleTimeString()}] Connected to backend on ${backendUrl}.`
       ]);
     }
 

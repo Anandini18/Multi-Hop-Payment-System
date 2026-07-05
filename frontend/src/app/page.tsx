@@ -183,7 +183,7 @@ const FlowServerNode = ({ data }: any) => {
         </div>
         <div>
           <div className="text-[11px] font-extrabold text-slate-200">{data.label}</div>
-          <div className="text-[8px] text-slate-500 font-mono">http://localhost:8080</div>
+          <div className="text-[8px] text-slate-500 font-mono">{process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080'}</div>
         </div>
       </div>
 

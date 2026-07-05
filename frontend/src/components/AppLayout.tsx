@@ -159,7 +159,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
                   </span>
                 </div>
                 <div className="text-[10px] text-slate-600 font-mono select-all truncate">
-                  http://localhost:8080
+                  {process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:8080'}
                 </div>
               </>
             ) : (

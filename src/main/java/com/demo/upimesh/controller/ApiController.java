@@ -19,6 +19,7 @@ import java.util.*;
  *   /api/bridge/ingest   → THE real production endpoint a real bridge node would hit
  *   /api/accounts, /api/transactions → for the dashboard
  */
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 @RestController
 @RequestMapping("/api")
 public class ApiController {
