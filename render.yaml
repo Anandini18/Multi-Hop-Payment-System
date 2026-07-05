@@ -1,7 +1,7 @@
 services:
   - type: web
     name: upi-offline-mesh-backend
-    env: docker
+    runtime: docker
     plan: free
     region: oregon
     port: 8080
