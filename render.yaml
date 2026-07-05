@@ -4,7 +4,6 @@ services:
     runtime: docker
     plan: free
     region: oregon
-    port: 8080
     envVars:
       - key: SPRING_JPA_SHOW_SQL
         value: "false"
